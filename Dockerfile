@@ -17,5 +17,8 @@ RUN unzip /tmp/discuz.zip \
     && chmod a+w -R config data uc_server/data uc_client/data \
     && rm -rf /var/lib/apt/lists/*
 
-EXPOSE 80
+#openshift does not allow to bind 80
+#change default port from 80 to 8080
+RUN sed -e 's/VirtualHost\ \*:80/VirtualHost\ \*:8080/' /etc/apache2/sites-available/000-default.conf
+EXPOSE 8080
 
